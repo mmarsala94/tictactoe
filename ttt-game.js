@@ -139,59 +139,59 @@ var model = {
   getPlayer: function(row, col) {
     return this.board[row][col];
   },
-  playerWin: function() {
+  playerWin: function(currentPlayer) {
     this.consecutiveSpaces = 0;
     //TESTS FOR HORIZONTAL WIN
     //This nested for loop tests one row at a time. The second a cell has the wrong player, it skips to the next row
     for (var i = 0; i < this.rowTotal; i++) {
       for (var j = 0; j < this.columnTotal; j++) {
-        if (this.getPlayer(i, j) === this.players[this.currentPlayerIndex])
+        if (this.getPlayer(i, j) === this.players[currentPlayer])
           this.consecutiveSpaces += 1;
         else {
           this.consecutiveSpaces = 0;
           j = this.columnTotal; //Impossible for this row to win, move on to the next row.
         }
         if (this.consecutiveSpaces === this.columnTotal)
-          return this.players[this.currentPlayerIndex]; //3 consecutive cells, we have a winner!
+          return this.players[currentPlayer]; //3 consecutive cells, we have a winner!
       }
     } //End Horizontal tests
     //TESTS FOR VERTICAL WIN
     //This nested for loop tests one column at a time. The second a cell has the wrong player, it skips to the next row.
     for (var k = 0; k < this.columnTotal; k++) {
       for (var l = 0; l < this.rowTotal; l++) {
-        if (this.getPlayer(l, k) === this.players[this.currentPlayerIndex])
+        if (this.getPlayer(l, k) === this.players[currentPlayer])
           this.consecutiveSpaces += 1;
         else {
           this.consecutiveSpaces = 0;
           l = this.rowTotal; //Impossible for this Column to win, move on to the next Col
         }
         if (this.consecutiveSpaces === this.rowTotal)
-          return this.players[this.currentPlayerIndex]; //3 consecutive cells, we have a winner!
+          return this.players[currentPlayer]; //3 consecutive cells, we have a winner!
       }
     } //End Vertical Tests
     //TESTS FOR TOP LEFT - BOTTOM RIGHT DIAGONAL WIN
     var m = 0;
     var n = 0;
-    while (n < this.columnTotal && this.getPlayer(m, n) === this.players[this.currentPlayerIndex]) {
+    while (n < this.columnTotal && this.getPlayer(m, n) === this.players[currentPlayer]) {
       this.consecutiveSpaces += 1;
       m += 1;
       n += 1;
 
     }
     if (this.consecutiveSpaces === this.columnTotal)
-      return this.players[this.currentPlayerIndex];
+      return this.players[currentPlayer];
     //First Diagonal failed, so lets try the second one.
     else {
       m = this.rowTotal - 1;
       n = 0;
       this.consecutiveSpaces = 0;
-      while (n < this.columnTotal && this.getPlayer(m, n) === this.players[this.currentPlayerIndex]) {
+      while (n < this.columnTotal && this.getPlayer(m, n) === this.players[currentPlayer]) {
         this.consecutiveSpaces += 1;
         m = m - 1;
         n = n + 1;
       }
       if (this.consecutiveSpaces === this.columnTotal)
-        return this.players[this.currentPlayerIndex];
+        return this.players[currentPlayer];
     } //End second Diagonal test
 
     if (this.isDraw())
@@ -273,22 +273,33 @@ tttModel7.board[2][1] = 'O';
 /*-------------Elements of Controller and View. Event handlers added to each cell, and cells updated via the update function and setInterval-------*/
 
 //SETS EVENT HANDLER FOR EACH CELL
-function addsEventListeners(){
-for(var i = 0; i < 3; i++){
-  for(var j = 0; j < 3; j++){
+function addEventListenerToCell(m,i, j){
+
     document.documentElement.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].addEventListener("click", function() {
       //if(event.onClick){
         //if(m.isValidMove){
         //setCellText(row, column, m.players[m.currentPlayerIndex]);
-        tttModel1.makeMove(i,j);
+        m.makeMove(i,j);
       //}
       //}
   });
-  }
+}
+//**********Added this on march 16th. Should be used instead of separately adding each cell. 
+//This for loop and addsEventListenerToCell could be used in the view class.
+//Then you could add this to view class. I think each cell has its own view. since each has to have own eventhandler.
+//Could make the 3's be rowTotal and colTotal that are set up in view class or taken from model class.
+ // for(var i = 0; i < 3; i++){
+ //   for(var j = 0; j < 3; j++){
+ //     addEventListenerToCell(i,j);
+ //   }
+ // }
+ for(var i = 0; i < 3; i++){
+    for(var j = 0; j < 3; j++){
+ addEventListenerToCell(tttModel1,i,j);
 }
 }
-
 //Testing one cell. Eventlistener added to one cell.
+/*
 document.documentElement.getElementsByTagName("tr")[0].getElementsByTagName("td")[0].addEventListener("click", function() {
       //if(event.onClick){
         //if(m.isValidMove){
@@ -370,7 +381,7 @@ document.documentElement.getElementsByTagName("tr")[2].getElementsByTagName("td"
         tttModel1.makeMove(2,2);
       //}
       //}
-  });
+  });*/
 // window.addEventListener("click", function() {
 //       //if(event.onClick){
 //         //if(m.isValidMove){
@@ -386,14 +397,14 @@ var tempPointBoard = {
       pointValue: 1
   };
 //UPDATES VIEW SO X AND O APPEAR WHEN MOVES ARE MADE.
-function updateView(){
+function updateView(m){
 for(var k = 0; k < 3; k++){
   for(var l = 0; l < 3; l++){
-    setCellText(k,l,tttModel1.getPlayer(k,l));
+    setCellText(k,l,m.getPlayer(k,l));
   }
 }
 }
-addsEventListeners();
+//addsEventListeners();
 //Put while loop here
 var gameLoop = setInterval(function(){ 
   //addsEventListeners();
@@ -401,8 +412,8 @@ var gameLoop = setInterval(function(){
     tempPointBoard = getBestOutcome(tttModel1, true);
     tttModel1.makeMove(tempPointBoard.rowWhereMoveMade,tempPointBoard.colWhereMoveMade);
   }
-  updateView();
-  if(tttModel1.playerWin() === 'X' || tttModel1.playerWin() === 'O' || tttModel1.playerWin() === 'Draw'){
+  updateView(tttModel1);
+  if(tttModel1.playerWin(0) === 'X' || tttModel1.playerWin(1) === 'O' || tttModel1.playerWin(0) === 'Draw'){
     alert("Game Over");
   clearInterval(gameLoop);
 
@@ -424,155 +435,100 @@ var gameLoop = setInterval(function(){
 /*-----------------------AI FUNCTION-------------------------------------*/
 
 function getBestOutcome(boardModel, isMaximizingPlayer) {
-  //console.log("FUNCTION ITERATION");
-  for(var a = 0; a < boardModel.rowTotal; a++){
-  for(var b = 0; b < boardModel.columnTotal; b++){
-    console.log("Row: " + a + " Column: " + b + ": " + boardModel.board[a][b]);
-  }
-}
-  console.log(boardModel.playerWin());
-  console.log("\n");
 
   //Declare and initialize model copy and variable to determine if move was valid, and variable to store potential outcomes
   var tempPoint = -1;
   var bestPoint = -1;
+  if(isMaximizingPlayer){
   var tempPointBoard = {
       rowWhereMoveMade: 0,
       colWhereMoveMade: 0,
-      pointValue: 0
+      pointValue: -1
   };
   var bestPointBoard = {
     rowWhereMoveMade: 0,
     colWhereMoveMade: 0,
-    pointValue : 0
+    pointValue : -1
   };
-
+}
+else{
+  var tempPointBoard = {
+      rowWhereMoveMade: 0,
+      colWhereMoveMade: 0,
+      pointValue: 1
+  };
+  var bestPointBoard = {
+    rowWhereMoveMade: 0,
+    colWhereMoveMade: 0,
+    pointValue : 1
+  };
+}
   //var bestPointBoard = {};
 
   //Base case. Return -1 for loss, 1 for win, or 0 for draw.
-  if (boardModel.playerWin() === 'X') {
-    console.log("Hey");
+  if (boardModel.playerWin(0) === 'X') {
     bestPointBoard.rowWhereMoveMade = 0;
     bestPointBoard.colWhereMoveMade = 0;
     bestPointBoard.pointValue = -1;
-   // bestPointValueSoFar = -1;
-    bestPoint = -1;
     return bestPointBoard;
-    //return JSON.parse(JSON.stringify(bestPointBoard));
-    //return bestPointBoard;
-  } else if (boardModel.playerWin() === 'O') {
-    console.log("Yo");
+  } else if (boardModel.playerWin(1) === 'O') {
     bestPointBoard.rowWhereMoveMade = 0;
     bestPointBoard.colWhereMoveMade = 0;
     bestPointBoard.pointValue = 1;
-    //bestPointValueSoFar = 1;
-    bestPoint = 1;
     return bestPointBoard;
-    //return JSON.parse(JSON.stringify(bestPointBoard));
-    //return bestPointBoard;
-  } else if (boardModel.playerWin() === 'Draw') {
-    console.log("So");
+  } else if (boardModel.playerWin(0) === 'Draw') {
     bestPointBoard.rowWhereMoveMade = 0;
     bestPointBoard.colWhereMoveMade = 0;
     bestPointBoard.pointValue = 0;
-    //bestPointValueSoFar = 0;
-    bestPoint = 0;
-    console.log("Best Point before DRAW return " + bestPoint);
     return bestPointBoard;
-    //return 0;
-    //return JSON.parse(JSON.stringify(bestPointBoard));
-    //return bestPointBoard;
   }
 
   var tttModel = new Model(boardModel.rowTotal, boardModel.columnTotal);
-  //Temporary, should really make this more modular for general use
-  //tttModel.board[0] = boardModel.copy(0);
-  //tttModel.board[1] = boardModel.copy(1);
-  //tttModel.board[2] = boardModel.copy(2);
   tttModel.currentPlayerIndex = boardModel.currentPlayerIndex;
   var isValidMove = true;
-  //var bestOutCome = 0;
-  //var tempOutcome = 0;
   for (var i = 0; i < boardModel.rowTotal; i++) {
     for (var j = 0; j < boardModel.columnTotal; j++) {
       tttModel.board[0] = boardModel.copy(0);
       tttModel.board[1] = boardModel.copy(1);
       tttModel.board[2] = boardModel.copy(2);
-      //tttModel.currentPlayer = boardModel.currentPlayer;
       //If the player is the computer, make the move at the given location
       if (isMaximizingPlayer) {
         tttModel.currentPlayerIndex = 1;//Make currentPlayerIndex the AI player
-        console.log("ROW: " + i + " COL: " + j + " isMaximizingPlayer");
 
         isValidMove = tttModel.makeMove(i, j);
         tttModel.currentPlayerIndex = 1;//This is messy. Fix this later. But, you need to check playerWin before you switch over.
         if (isValidMove) {
-          console.log("isValidMove");
-          console.log("Recursive Call");
-          //var tempPointBoard = getBestOutcome(tttModel,bestPoint,!isMaximizingPlayer);
           tempPointBoard = getBestOutcome(tttModel, !isMaximizingPlayer);
-          console.log("Temp point board vals: ");
-          //console.log(tempPointBoard);
-          console.log(tempPointBoard);
           if (tempPointBoard.pointValue >= bestPointBoard.pointValue) {
-            //bestPointBoard = JSON.parse(JSON.stringify(tempPointBoard));
             bestPointBoard = tempPointBoard;
             bestPointBoard.rowWhereMoveMade = i;
             bestPointBoard.colWhereMoveMade = j;
-            console.log("Best Point Board after reset through maximization");
-            //console.log(bestPointBoard);
-            console.log(bestPointBoard);
-            //tempPointBoard.pointValue = -1; //Reset tempPointValue
           }
         } else {
-          console.log("not valid move");
           continue;
         }
       } else if (!isMaximizingPlayer) {
         tttModel.currentPlayerIndex = 0;//Make currentPlayerIndex the human player  
-        console.log("ROW: " + i + " COL: " + j + " Minimizing Player");
 
         isValidMove = tttModel.makeMove(i, j);
         tttModel.currentPlayerIndex = 0; //This is messy. Fix this later. But, you need to check playerWin before you switch over.
         if (isValidMove) {
-          console.log("isValidmove");
-          console.log("recursive call");
           tempPointBoard = getBestOutcome(tttModel, !isMaximizingPlayer);
-          //var tempPointBoardq = getBestOutcome(tttModel,!isMaximizingPlayer);
-          console.log("temp Point Board Q values");
-          //console.log(tempPointBoardq);
-          console.log(tempPointBoard);
           if (tempPointBoard.pointValue <= bestPointBoard.pointValue) {
-            //bestPointBoard = JSON.parse(JSON.stringify(tempPointBoardq));
             bestPointBoard = tempPointBoard;
             bestPointBoard.rowWhereMoveMade = i;
             bestPointBoard.colWhereMoveMade = j;
-            console.log("Best Point Board after reset through minimization");
-            console.log(bestPointBoard);
-            console.log(bestPointBoard.rowWhereMoveMade);
-            //tempPointBoardq.pointValue = -1; //Reset tempPointValue
           }
         } else {
-          console.log("not valid move");
           continue;
         }
       }
     }//End of inner for loop
 
   }//End of outer for loop
-  //return JSON.parse(JSON.stringify(bestPointBoard));
- // console.log(bestPointBoard);
-  console.log("Returning the board at the end of the loop now.");
-  console.log(bestPointBoard);
-  //Print out the board
-//for(var p = 0; p < tttModel.rowTotal; p++){
-//  for(var q = 0; q < tttModel.columnTotal; q++){
-//    console.log("Row: " + p + " Column: " + q + ": " + tttModel.board[p][q]);
-//  }
-//}
+
   return bestPointBoard;
-  //return JSON.parse(JSON.stringify(bestPointBoard));
-  //return bestPointBoard;
+  
 }//End getBestOutcome function 
 
 //console.log(getBestOutcome(tttModel1, false));
