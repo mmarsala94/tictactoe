@@ -63,7 +63,57 @@ View v = new View(m, function(row, column, tdElement) {
 });
 */
 
+//Once a View is created, the visible board is created.
+// function View(m, i, j, callback){
+//   createGrid(m.rowTotal, m.columnTotal);
+//    for(var i = 0; i < 3; i++){
+//     for(var j = 0; j < 3; j++){
+//      callback(m,i,j);
+//     }
+//   }
+// }
 
+// //updateView will still be called in its original spot in execution. It will just be attached to View.
+// var view = {
+//   constructor:View,
+//   updateView: function(m){
+//     for(var k = 0; k < 3; k++){
+//       for(var l = 0; l < 3; l++){
+//         setCellText(k,l,m.getPlayer(k,l));
+//       }
+//     }
+//   }
+// }
+//Controller passes function that View will use
+// View.prototype = view;
+
+// //Controller creates a new Model. Then the View class is created.
+// function Controller(){
+//    this.tttGameModel = new Model(3,3);
+//   //SETS EVENT HANDLER FOR EACH CELL
+// function addEventListenerToCell(m,i,j){
+
+//     document.documentElement.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].addEventListener("click", function() {
+//       //if(event.onClick){
+//         //if(m.isValidMove){
+//         //setCellText(row, column, m.players[m.currentPlayerIndex]);
+//         m.makeMove(i,j);
+//       //}
+//       //}
+//   });
+// }
+// this.v = new View(this.tttGameModel, tttGameModel.rowTotal, tttGameModel.colTotal, createGrid);
+// }
+
+
+// //addEventListenerToCell will be in the original spot in execution. It will just be attached to Controller.
+// var controller = {
+//   constructor:Controller
+// };
+// Controller.prototype = controller;
+
+//var tttController = new Controller; //Instance of Controller class is created. An instance of Model and View were also created.
+//At this point, The 
 /*<----------------------------------------Model Class------------------------------------------>*/
 "use strict";
 
@@ -229,6 +279,10 @@ var model = {
 };
 
 Model.prototype = model;
+
+//var tttController = new Controller;
+
+
 var tttModel1 = new Model(3, 3);
 var tttModel2 = new Model(3, 3);
 var tttModel3 = new Model(3, 3);
@@ -273,6 +327,7 @@ tttModel7.board[2][1] = 'O';
 /*-------------Elements of Controller and View. Event handlers added to each cell, and cells updated via the update function and setInterval-------*/
 
 //SETS EVENT HANDLER FOR EACH CELL
+
 function addEventListenerToCell(m,i, j){
 
     document.documentElement.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].addEventListener("click", function() {
@@ -288,16 +343,18 @@ function addEventListenerToCell(m,i, j){
 //This for loop and addsEventListenerToCell could be used in the view class.
 //Then you could add this to view class. I think each cell has its own view. since each has to have own eventhandler.
 //Could make the 3's be rowTotal and colTotal that are set up in view class or taken from model class.
- // for(var i = 0; i < 3; i++){
- //   for(var j = 0; j < 3; j++){
- //     addEventListenerToCell(i,j);
- //   }
- // }
+
+
  for(var i = 0; i < 3; i++){
-    for(var j = 0; j < 3; j++){
- addEventListenerToCell(tttModel1,i,j);
-}
-}
+   for(var j = 0; j < 3; j++){
+     addEventListenerToCell(tttModel1,i,j);
+   }
+ }
+//  for(var i = 0; i < 3; i++){
+//     for(var j = 0; j < 3; j++){
+//  tttController.addEventListenerToCell(tttGameModel,i,j);
+//   }
+// }
 //Testing one cell. Eventlistener added to one cell.
 /*
 document.documentElement.getElementsByTagName("tr")[0].getElementsByTagName("td")[0].addEventListener("click", function() {
@@ -396,7 +453,7 @@ var tempPointBoard = {
       colWhereMoveMade: 0,
       pointValue: 1
   };
-//UPDATES VIEW SO X AND O APPEAR WHEN MOVES ARE MADE.
+//UPDATES VIEW SO X AND O APPEAR WHEN MOVES ARE MADE.**************
 function updateView(m){
 for(var k = 0; k < 3; k++){
   for(var l = 0; l < 3; l++){
@@ -413,6 +470,7 @@ var gameLoop = setInterval(function(){
     tttModel1.makeMove(tempPointBoard.rowWhereMoveMade,tempPointBoard.colWhereMoveMade);
   }
   updateView(tttModel1);
+  //v.updateView(tttController.tttGameModel);
   if(tttModel1.playerWin(0) === 'X' || tttModel1.playerWin(1) === 'O' || tttModel1.playerWin(0) === 'Draw'){
     alert("Game Over");
   clearInterval(gameLoop);
