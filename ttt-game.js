@@ -72,6 +72,7 @@ function View(m, i, j, callback){
     }
   }
 }
+//As you create the table cell, pass it to the Controller. Don't tether in addEventListener.
 
 //updateView will still be called in its original spot in execution. It will just be attached to View.
 var view = {
@@ -83,7 +84,7 @@ var view = {
       }
     }
   }
-}
+};
 //Controller passes function that View will use
 View.prototype = view;
 
@@ -253,7 +254,24 @@ var model = {
     this.players.push(str);
   },
   copy: function(i) {
-    return this.board[i].slice();
+    //create new model
+    var tempModel = new Model(3,3);
+    //set properties
+    tempModel.currentPlayerIndex = this.currentPlayerIndex;
+    tempModel.rowTotal = this.rowTotal;
+    tempModel.columnTotal = this.columnTotal;
+    tempModel.players = this.players;
+    tempModel.currentPlayerIndex = this.currentPlayerIndex;
+    this.players[0] = 'X';
+    this.players[1] = 'O';
+    //Primitives you can just copy over
+    //A primitive would be an integer value
+    //Array is not a primitive value. That's why
+    //you need to use slice() to make a copy
+    tempModel.board[0] = this.board[0].slice();
+    tempModel.board[1] = this.board[1].slice();
+    tempModel.board[2] = this.board[2].slice();
+    return tempModel;
   },
     playerWinSimple: function() {
     this.consecutiveSpacesSimple = 0;
@@ -495,8 +513,8 @@ var gameLoop = setInterval(function(){
 function getBestOutcome(boardModel, isMaximizingPlayer) {
 
   //Declare and initialize model copy and variable to determine if move was valid, and variable to store potential outcomes
-  var tempPoint = -1;
-  var bestPoint = -1;
+  //var tempPoint = -1;
+  //var bestPoint = -1;
   if(isMaximizingPlayer){
   var tempPointBoard = {
       rowWhereMoveMade: 0,
@@ -546,9 +564,7 @@ else{
   var isValidMove = true;
   for (var i = 0; i < boardModel.rowTotal; i++) {
     for (var j = 0; j < boardModel.columnTotal; j++) {
-      tttModel.board[0] = boardModel.copy(0);
-      tttModel.board[1] = boardModel.copy(1);
-      tttModel.board[2] = boardModel.copy(2);
+      tttModel = boardModel.copy();
       //If the player is the computer, make the move at the given location
       if (isMaximizingPlayer) {
         tttModel.currentPlayerIndex = 1;//Make currentPlayerIndex the AI player
