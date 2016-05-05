@@ -1,4 +1,3 @@
-
 function Model(rowTotal, columnTotal) {
   this.rowTotal = rowTotal;
   this.columnTotal = columnTotal;
@@ -171,19 +170,20 @@ var tttModel6 = new Model(3, 3);
 var tttModel7 = new Model(3, 3);
 var tttModel8 = new Model(3, 3);
 var tttModel9 = new Model(3, 3);
+var tttModel10 = new Model(3, 3);
 var parentModel = new Model(3, 3);
 
-parentModel.board[0][0] = '';
-parentModel.board[0][1] = '';
-parentModel.board[0][2] = '';
-parentModel.board[1][0] = '';
-parentModel.board[1][1] = '';
-parentModel.board[1][2] = '';
-parentModel.board[2][0] = '';
-parentModel.board[2][1] = '';
-parentModel.board[2][2] = '';
+// parentModel.board[0][0] = '';
+// parentModel.board[0][1] = '';
+// parentModel.board[0][2] = '';
+// parentModel.board[1][0] = '';
+// parentModel.board[1][1] = '';
+// parentModel.board[1][2] = '';
+// parentModel.board[2][0] = '';
+// parentModel.board[2][1] = '';
+// parentModel.board[2][2] = '';
 
-tttModel1.board[0][0] = 'X';
+tttModel1.board[0][0] = '';
 tttModel1.board[0][1] = '';
 tttModel1.board[0][2] = '';
 tttModel1.board[1][0] = '';
@@ -193,116 +193,138 @@ tttModel1.board[2][0] = '';
 tttModel1.board[2][1] = '';
 tttModel1.board[2][2] = '';
 
-tttModel2.board[0][0] = '';
-tttModel2.board[0][1] = 'X';
-tttModel2.board[0][2] = '';
-tttModel2.board[1][0] = '';
-tttModel2.board[1][1] = '';
-tttModel2.board[1][2] = '';
-tttModel2.board[2][0] = '';
-tttModel2.board[2][1] = '';
-tttModel2.board[2][2] = '';
+// tttModel2.board[0][0] = '';
+// tttModel2.board[0][1] = 'X';
+// tttModel2.board[0][2] = '';
+// tttModel2.board[1][0] = '';
+// tttModel2.board[1][1] = '';
+// tttModel2.board[1][2] = '';
+// tttModel2.board[2][0] = '';
+// tttModel2.board[2][1] = '';
+// tttModel2.board[2][2] = '';
 
 
-tttModel3.board[0][0] = '';
-tttModel3.board[0][1] = '';
-tttModel3.board[0][2] = 'X';
-tttModel3.board[1][0] = '';
-tttModel3.board[1][1] = '';
-tttModel3.board[1][2] = '';
-tttModel3.board[2][0] = '';
-tttModel3.board[2][1] = '';
-tttModel3.board[2][2] = '';
+// tttModel3.board[0][0] = '';
+// tttModel3.board[0][1] = '';
+// tttModel3.board[0][2] = 'X';
+// tttModel3.board[1][0] = '';
+// tttModel3.board[1][1] = '';
+// tttModel3.board[1][2] = '';
+// tttModel3.board[2][0] = '';
+// tttModel3.board[2][1] = '';
+// tttModel3.board[2][2] = '';
 
-tttModel4.board[0][0] = '';
-tttModel4.board[0][1] = '';
-tttModel4.board[0][2] = '';
-tttModel4.board[1][0] = 'X';
-tttModel4.board[1][1] = '';
-tttModel4.board[1][2] = '';
-tttModel4.board[2][0] = '';
-tttModel4.board[2][1] = '';
-tttModel4.board[2][2] = '';
+// tttModel4.board[0][0] = '';
+// tttModel4.board[0][1] = '';
+// tttModel4.board[0][2] = '';
+// tttModel4.board[1][0] = 'X';
+// tttModel4.board[1][1] = '';
+// tttModel4.board[1][2] = '';
+// tttModel4.board[2][0] = '';
+// tttModel4.board[2][1] = '';
+// tttModel4.board[2][2] = '';
 
-tttModel5.board[0][0] = '';
-tttModel5.board[0][1] = '';
-tttModel5.board[0][2] = '';
-tttModel5.board[1][0] = '';
-tttModel5.board[1][1] = 'X';
-tttModel5.board[1][2] = '';
-tttModel5.board[2][0] = '';
-tttModel5.board[2][1] = '';
-tttModel5.board[2][2] = '';
+// tttModel5.board[0][0] = '';
+// tttModel5.board[0][1] = '';
+// tttModel5.board[0][2] = '';
+// tttModel5.board[1][0] = '';
+// tttModel5.board[1][1] = 'X';
+// tttModel5.board[1][2] = '';
+// tttModel5.board[2][0] = '';
+// tttModel5.board[2][1] = '';
+// tttModel5.board[2][2] = '';
 
-tttModel6.board[0][0] = '';
-tttModel6.board[0][1] = '';
-tttModel6.board[0][2] = '';
-tttModel6.board[1][0] = '';
-tttModel6.board[1][1] = '';
-tttModel6.board[1][2] = 'X';
-tttModel6.board[2][0] = '';
-tttModel6.board[2][1] = '';
-tttModel6.board[2][2] = '';
+// tttModel6.board[0][0] = '';
+// tttModel6.board[0][1] = '';
+// tttModel6.board[0][2] = '';
+// tttModel6.board[1][0] = '';
+// tttModel6.board[1][1] = '';
+// tttModel6.board[1][2] = 'X';
+// tttModel6.board[2][0] = '';
+// tttModel6.board[2][1] = '';
+// tttModel6.board[2][2] = '';
 
-tttModel7.board[0][0] = '';
-tttModel7.board[0][1] = '';
-tttModel7.board[0][2] = '';
-tttModel7.board[1][0] = '';
-tttModel7.board[1][1] = '';
-tttModel7.board[1][2] = '';
-tttModel7.board[2][0] = 'X';
-tttModel7.board[2][1] = '';
-tttModel7.board[2][2] = '';
+// tttModel7.board[0][0] = '';
+// tttModel7.board[0][1] = '';
+// tttModel7.board[0][2] = '';
+// tttModel7.board[1][0] = '';
+// tttModel7.board[1][1] = '';
+// tttModel7.board[1][2] = '';
+// tttModel7.board[2][0] = 'X';
+// tttModel7.board[2][1] = '';
+// tttModel7.board[2][2] = '';
 
-tttModel8.board[0][0] = '';
-tttModel8.board[0][1] = '';
-tttModel8.board[0][2] = '';
-tttModel8.board[1][0] = '';
-tttModel8.board[1][1] = '';
-tttModel8.board[1][2] = '';
-tttModel8.board[2][0] = '';
-tttModel8.board[2][1] = 'X';
-tttModel8.board[2][2] = '';
+// tttModel8.board[0][0] = '';
+// tttModel8.board[0][1] = '';
+// tttModel8.board[0][2] = '';
+// tttModel8.board[1][0] = '';
+// tttModel8.board[1][1] = '';
+// tttModel8.board[1][2] = '';
+// tttModel8.board[2][0] = '';
+// tttModel8.board[2][1] = 'X';
+// tttModel8.board[2][2] = '';
 
-tttModel9.board[0][0] = '';
-tttModel9.board[0][1] = '';
-tttModel9.board[0][2] = '';
-tttModel9.board[1][0] = '';
-tttModel9.board[1][1] = '';
-tttModel9.board[1][2] = '';
-tttModel9.board[2][0] = '';
-tttModel9.board[2][1] = '';
-tttModel9.board[2][2] = 'X';
+// tttModel9.board[0][0] = '';
+// tttModel9.board[0][1] = '';
+// tttModel9.board[0][2] = '';
+// tttModel9.board[1][0] = '';
+// tttModel9.board[1][1] = '';
+// tttModel9.board[1][2] = '';
+// tttModel9.board[2][0] = '';
+// tttModel9.board[2][1] = '';
+// tttModel9.board[2][2] = 'X';
+
+// tttModel10.board[0][0] = '';
+// tttModel10.board[0][1] = '';
+// tttModel10.board[0][2] = '';
+// tttModel10.board[1][0] = '';
+// tttModel10.board[1][1] = '';
+// tttModel10.board[1][2] = '';
+// tttModel10.board[2][0] = '';
+// tttModel10.board[2][1] = '';
+// tttModel10.board[2][2] = '';
+
 
 
 //var gameList = [
 	//{key:modelString, value:{parentModels: parentModelStringList, isAITurn:true/false, points:points}}
-
+JSON.stringify(tttModel1);
 //]
 var gameList = [
-	{key: tttModel1, value:{parentModels:parentModel, isAITurn:true, points:0}},
-	{key: tttModel2, value:{parentModels:parentModel, isAITurn:true, points:0}},
-  {key: tttModel3, value:{parentModels:parentModel, isAITurn:true, points:0}},
-	{key: tttModel4, value:{parentModels:parentModel, isAITurn:true, points:0}},
-  {key: tttModel5, value:{parentModels:parentModel, isAITurn:true, points:0}},
-	{key: tttModel6, value:{parentModels:parentModel, isAITurn:true, points:0}},
-  {key: tttModel7, value:{parentModels:parentModel, isAITurn:true, points:0}},
-	{key: tttModel8, value:{parentModels:parentModel, isAITurn:true, points:0}},
-  {key: tttModel9, value:{parentModels:parentModel, isAITurn:true, points:0}}
+	// {key: tttModel1, value:{parentModels:parentModel, isAITurn:true, points:0}},
+	// {key: tttModel2, value:{parentModels:parentModel, isAITurn:true, points:0}},
+ //  {key: tttModel3, value:{parentModels:parentModel, isAITurn:true, points:0}},
+	// {key: tttModel4, value:{parentModels:parentModel, isAITurn:true, points:0}},
+ //  {key: tttModel5, value:{parentModels:parentModel, isAITurn:true, points:0}},
+	// {key: tttModel6, value:{parentModels:parentModel, isAITurn:true, points:0}},
+ //  {key: tttModel7, value:{parentModels:parentModel, isAITurn:true, points:0}},
+	// {key: tttModel8, value:{parentModels:parentModel, isAITurn:true, points:0}},
+ //  {key: tttModel9, value:{parentModels:parentModel, isAITurn:true, points:0}}
+ {key: tttModel1, value:{parentModels:[], isAITurn:true, points:0}}
 ];
 
-
-
-function mapper(gameList) {
+//JSON.stringify(tttModel1); //->Stringversion of whole model
+//JSON.parse //->undo string
+//Model.prototype.copy.call();//call allows you to set this
+//Need to use getBestOutcome()
+function mapper(kVPairList, mapFunc) {
   // filenameLinePairs consists of a list of objects in the form {key: fileName, value: line}
-  return gameList.map(function(kVPair) {
+  return kVPairList.map(function(kVPair) {
     var childModel = kVPair.key; // ignored for output from this map function
     var gameState = kVPair.value;
-
-    //Potentially put a for loop here
-    words = line.split(" ");
-    return words.map(function(word) {
-        return {key: childModelString, value: {parentModels:[modelString], isAITurn:true}}; // each word contributes 1 to the total
+    //serialization
+    //USE PARSE AND COPY.CALL() HERE
+    for (var i = 0; i < childModel.rowTotal; i++) {
+      for (var j = 0; j < childModel.columnTotal; j++) {
+        var tttModel = new Model(boardModel.rowTotal, boardModel.columnTotal);
+        tttModel = childModel.copy();
+        if(tttModel.isValidMove(i, j)){
+          tttModel.makeMove(i, j);
+        }
+    JSON.stringify(childModel);
+    
+    return .map(function() {
+        return {key: childModelString, value: {parentModels:[tttModel1], isAITurn:false}}; // each word contributes 1 to the total
     });
   });
 }
@@ -367,7 +389,7 @@ function mapperOutputToString(listsOfWordValuePairs) {
 
 
 //console.log(mapperOutputToString(mapper(filenameLinePairs)));
-var mapperOutput = flatten(mapper(filenameLinePairs));
+var mapperOutput = flatten(mapper(gameList));
 sort(mapperOutput);
 console.log(mapperOutput);
 console.log(reducer(mapperOutput));
