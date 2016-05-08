@@ -135,7 +135,24 @@ var model = {
     this.players.push(str);
   },
   copy: function(i) {
-    return this.board[i].slice();
+    //create new model
+    var tempModel = new Model(3,3);
+    //set properties
+    tempModel.currentPlayerIndex = this.currentPlayerIndex;
+    tempModel.rowTotal = this.rowTotal;
+    tempModel.columnTotal = this.columnTotal;
+    tempModel.players = this.players.slice();
+    tempModel.currentPlayerIndex = this.currentPlayerIndex;
+    this.players[0] = 'X';
+    this.players[1] = 'O';
+    //Primitives you can just copy over
+    //A primitive would be an integer value
+    //Array is not a primitive value. That's why
+    //you need to use slice() to make a copy
+    tempModel.board[0] = this.board[0].slice();
+    tempModel.board[1] = this.board[1].slice();
+    tempModel.board[2] = this.board[2].slice();
+    return tempModel;
   },
     playerWinSimple: function() {
     this.consecutiveSpacesSimple = 0;
@@ -295,7 +312,7 @@ tttModel1.board[2][2] = '';
   
 };
 
-JSON.stringify(tttModel1);
+tttModel1 = JSON.stringify(tttModel1);
 //]
 var gameList = [
 	// {key: tttModel1, value:{parentModels:parentModel, isAITurn:true, points:0}},
@@ -309,7 +326,7 @@ var gameList = [
  //  {key: tttModel9, value:{parentModels:parentModel, isAITurn:true, points:0}}
  {key: tttModel1, value:{parentModels:[], isAITurn:true, points:0}}
 ];
-
+//console.log(tttModel1);
 //JSON.stringify(tttModel1); //->Stringversion of whole model
 //JSON.parse //->undo string
 //Model.prototype.copy.call();//call allows you to set this
@@ -324,19 +341,22 @@ function mapper(kVPairList, mapFunc) {
     //USE PARSE AND COPY.CALL() HERE
     //need another var parentModel for parse.
     //at this point, modellike
+    //console.log(parentModelString);
     var tempModel = JSON.parse(parentModelString);
     var parentModel = Model.prototype.copy.call(tempModel); //on this modellike
     //
     for (var i = 0; i < parentModel.rowTotal; i++) {
       for (var j = 0; j < parentModel.columnTotal; j++) {
-        var tttModel = new Model(boardModel.rowTotal, boardModel.columnTotal);
+        var tttModel = new Model(parentModel.rowTotal, parentModel.columnTotal);
         tttModel = parentModel.copy();
         if(tttModel.isValidMove(i, j)){
           tttModel.makeMove(i, j);
         }
         branchObj.key = JSON.stringify(tttModel);
-        branchObj.value.parentModels = parentModelString;
-        branchObj.value.isAITurn = !gameState.value.isAITurn;
+        //What is the proper way to set these values?
+        //branchObj.value.parentModels? or just branchObj.parentModels?
+        branchObj.parentModels = parentModelString;
+        branchObj.isAITurn = !gameState.isAITurn;
         outputtedKVPairs.push(branchObj);
       }
     }
