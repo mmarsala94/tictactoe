@@ -1,3 +1,4 @@
+"use strict";
 function Model(rowTotal, columnTotal) {
   this.rowTotal = rowTotal;
   this.columnTotal = columnTotal;
@@ -288,6 +289,12 @@ tttModel1.board[2][2] = '';
 
 //var gameList = [
 	//{key:modelString, value:{parentModels: parentModelStringList, isAITurn:true/false, points:points}}
+  var branchObj = {
+  key: [],
+  value:{parentModels: [], isAITurn:true, points: 0}
+  
+};
+
 JSON.stringify(tttModel1);
 //]
 var gameList = [
@@ -309,23 +316,38 @@ var gameList = [
 //Need to use getBestOutcome()
 function mapper(kVPairList, mapFunc) {
   // filenameLinePairs consists of a list of objects in the form {key: fileName, value: line}
+  var outputtedKVPairs = [];
   return kVPairList.map(function(kVPair) {
-    var childModel = kVPair.key; // ignored for output from this map function
+    var parentModelString = kVPair.key; // ignored for output from this map function
     var gameState = kVPair.value;
     //serialization
     //USE PARSE AND COPY.CALL() HERE
-    for (var i = 0; i < childModel.rowTotal; i++) {
-      for (var j = 0; j < childModel.columnTotal; j++) {
+    //need another var parentModel for parse.
+    //at this point, modellike
+    var tempModel = JSON.parse(parentModelString);
+    var parentModel = Model.prototype.copy.call(tempModel); //on this modellike
+    //
+    for (var i = 0; i < parentModel.rowTotal; i++) {
+      for (var j = 0; j < parentModel.columnTotal; j++) {
         var tttModel = new Model(boardModel.rowTotal, boardModel.columnTotal);
-        tttModel = childModel.copy();
+        tttModel = parentModel.copy();
         if(tttModel.isValidMove(i, j)){
           tttModel.makeMove(i, j);
         }
-    JSON.stringify(childModel);
-    
-    return .map(function() {
-        return {key: childModelString, value: {parentModels:[tttModel1], isAITurn:false}}; // each word contributes 1 to the total
-    });
+        branchObj.key = JSON.stringify(tttModel);
+        branchObj.value.parentModels = parentModelString;
+        branchObj.value.isAITurn = !gameState.value.isAITurn;
+        outputtedKVPairs.push(branchObj);
+      }
+    }
+    JSON.stringify(parentModel);//Not sure why this is here
+    //Plan of attack for tomorrow is to find out proper order for this return
+    //Should I be returning this? Or storing them in a gameList and then returning?
+    //the for loops should wrap around more code?, so its possible
+    //Fix JSON error on line 321.
+     
+        return outputtedKVPairs; // each word contributes 1 to the total
+  
   });
 }
 
