@@ -134,7 +134,7 @@ var model = {
   addPlayer: function(str) {
     this.players.push(str);
   },
-  copy: function(i) {
+  copy: function() {
     //create new model
     var tempModel = new Model(3,3);
     //set properties
@@ -306,11 +306,6 @@ tttModel1.board[2][2] = '';
 
 //var gameList = [
 	//{key:modelString, value:{parentModels: parentModelStringList, isAITurn:true/false, points:points}}
-  var branchObj = {
-  key: [],
-  value:{parentModels: [], isAITurn:true, points: 0}
-  
-};
 
 tttModel1 = JSON.stringify(tttModel1);
 //]
@@ -333,39 +328,34 @@ var gameList = [
 //Need to use getBestOutcome()
 function mapper(kVPairList, mapFunc) {
   // filenameLinePairs consists of a list of objects in the form {key: fileName, value: line}
-  var outputtedKVPairs = [];
+  
   return kVPairList.map(function(kVPair) {
     var parentModelString = kVPair.key; // ignored for output from this map function
     var gameState = kVPair.value;
+    var outputtedKVPairs = [];
     //serialization
     //USE PARSE AND COPY.CALL() HERE
     //need another var parentModel for parse.
     //at this point, modellike
     //console.log(parentModelString);
     var tempModel = JSON.parse(parentModelString);
-    var parentModel = Model.prototype.copy.call(tempModel); //on this modellike
+    //var tttModel = Model.prototype.copy.call(tempModel); //on this modellike
     //
     for (var i = 0; i < parentModel.rowTotal; i++) {
       for (var j = 0; j < parentModel.columnTotal; j++) {
-        var tttModel = new Model(parentModel.rowTotal, parentModel.columnTotal);
-        tttModel = parentModel.copy();
+       var tttModel = Model.prototype.copy.call(tempModel);
         if(tttModel.isValidMove(i, j)){
           tttModel.makeMove(i, j);
         }
-        branchObj.key = JSON.stringify(tttModel);
-        //What is the proper way to set these values?
-        //branchObj.value.parentModels? or just branchObj.parentModels?
-        branchObj.parentModels = parentModelString;
-        branchObj.isAITurn = !gameState.isAITurn;
-        outputtedKVPairs.push(branchObj);
+        
+        outputtedKVPairs.push({
+          key: JSON.stringify(tttModel),
+          value:{parentModels: [parentModelString], isAITurn:!(gameState.isAITurn)}
+
+        });
       }
     }
-    JSON.stringify(parentModel);//Not sure why this is here
-    //Plan of attack for tomorrow is to find out proper order for this return
-    //Should I be returning this? Or storing them in a gameList and then returning?
-    //the for loops should wrap around more code?, so its possible
-    //Fix JSON error on line 321.
-     
+        //console.log(outputtedKVPairs);
         return outputtedKVPairs; // each word contributes 1 to the total
   
   });
